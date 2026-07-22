@@ -35,17 +35,14 @@ a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 .grain{position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:999;opacity:.25;}
 .top-bar{background:linear-gradient(90deg,var(--redd),var(--red),var(--redd));padding:10px 16px;text-align:center;font-size:.75rem;font-weight:700;letter-spacing:1px;color:#1a0004;position:relative;z-index:10;padding-top:calc(10px + env(safe-area-inset-top,0px));}
-/* HERO — overflow:visible para o video aparecer */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:clamp(28px,5vw,48px) clamp(16px,5vw,24px) 20px;text-align:center;overflow:visible;}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(255,23,68,.09) 0%,transparent 65%),radial-gradient(ellipse 50% 30% at 80% 90%,rgba(255,214,0,.06) 0%,transparent 60%),var(--bg);z-index:0;}
 .hero-glow{position:absolute;width:min(300px,80vw);height:min(300px,80vw);border-radius:50%;background:radial-gradient(circle,rgba(255,23,68,.14) 0%,transparent 70%);top:-80px;left:50%;transform:translateX(-50%);animation:glow-pulse 4s ease-in-out infinite;z-index:0;}
 @keyframes glow-pulse{0%,100%{opacity:.5;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.15)}}
 .headline{position:relative;z-index:1;font-family:'Montserrat',sans-serif;font-size:clamp(1.45rem,5.5vw,2.4rem);font-weight:900;line-height:1.2;letter-spacing:-.3px;margin-bottom:20px;max-width:min(420px,100%);}
 .headline .hl-gold{color:var(--gold)}
-/* VIDEO HERO */
 .hero-video-wrap{position:relative;z-index:1;width:200px;height:355px;margin:0 auto 24px;border-radius:16px;overflow:hidden;border:3px solid var(--red);box-shadow:0 8px 32px rgba(255,23,68,.4),0 0 60px rgba(255,23,68,.2);flex-shrink:0;}
 .hero-video-wrap video{width:100%;height:100%;object-fit:cover;display:block;}
-/* ESCONDE mockup antigo */
 .mockup-scene{display:none!important;}
 .cta-btn{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--red),var(--redd));color:#fff;font-family:'Montserrat',sans-serif;font-size:clamp(.95rem,3.5vw,1.05rem);font-weight:900;letter-spacing:1.5px;text-transform:uppercase;padding:18px clamp(20px,5vw,36px);border-radius:14px;min-height:52px;box-shadow:0 8px 32px rgba(255,23,68,.4);animation:cta-pulse 2.4s ease-in-out infinite;transition:transform .15s;width:100%;max-width:min(360px,100%);}
 .cta-btn:active{transform:scale(.97)}
@@ -300,7 +297,6 @@ html.age-locked,html.age-locked body{overflow:hidden}
     Tenha acesso a <span class="hl-gold">+1200 Doramas PICANTES🔥</span> Todos traduzidos em português.
   </h1>
 
-  <!-- VIDEO HERO -->
   <div class="hero-video-wrap">
     <video autoplay muted loop playsinline>
       <source src="https://doram.shop/wp-content/uploads/2026/07/03-LS-M04.mp4" type="video/mp4">
@@ -648,17 +644,11 @@ function irParaCheckout(){
   if($("page-vendas"))$("page-vendas").style.display="none";
   $("page-checkout").style.display="block";
   window.scrollTo(0,0);
-  if(!state.backTrap){state.backTrap=true;try{history.pushState(null,"",location.href);window.addEventListener("popstate",function(){if($("page-checkout").style.display==="block"&&!$("sec-venda").classList.contains("hidden")&&!state.modalMostrado){abrirModalSaida();history.pushState(null,"",location.href);}});}catch(e){}}
 }
 
 function abrirModalSaida(){
   if(state.modalMostrado)return;if($("page-checkout").style.display!=="block")return;if($("sec-venda").classList.contains("hidden"))return;
   state.modalMostrado=true;$("modalSaida").classList.remove("hidden");
-}
-function setupExitIntent(){
-  document.addEventListener("mouseout",function(e){if(!e.relatedTarget&&e.clientY<=0)abrirModalSaida();});
-  if($("btnAplicarDesc"))$("btnAplicarDesc").addEventListener("click",function(){state.descontoAtivo=true;atualizarTotal();$("modalSaida").classList.add("hidden");track("ViewContent",{content_name:"cupom_20_aplicado"});var alvo=document.querySelector(".valor-row");if(alvo)alvo.scrollIntoView({behavior:"smooth",block:"center"});});
-  if($("btnPularDesc"))$("btnPularDesc").addEventListener("click",function(){$("modalSaida").classList.add("hidden");});
 }
 
 function setupCheckout(){
@@ -733,7 +723,7 @@ function aprovado(){
   if(!$("bumpsBox"))return;
   $("prodNome").textContent=CFG.PRODUTO.nome;$("prodImg").src=CFG.PRODUTO.capa;
   var tb=$("bumpsTitulo");if(tb)tb.textContent="Adicione mais "+CFG.ITEM_LABEL+" com desconto";
-  renderBumps();atualizarTotal();setupCheckout();setupExitIntent();
+  renderBumps();atualizarTotal();setupCheckout();
   track("ViewContent",{content_name:CFG.PRODUTO.nome,value:CFG.PRODUTO.preco,currency:CFG.MOEDA});
 })();
 
