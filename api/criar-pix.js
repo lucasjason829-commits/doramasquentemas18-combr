@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Dados incompletos' });
   }
 
-  const PRECO_BASE = 13.60;
+  const PRECO_BASE = 17.00;
   const PRECO_BUMP = 7.90;
   let total = PRECO_BASE;
   if (bump1) total += PRECO_BUMP;
